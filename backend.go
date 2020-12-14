@@ -202,9 +202,9 @@ func backend_regexp(name, info_url, url, vre, dre, dfmt string) {
 		log.Print(err)
 		return
 	}
-	value = t.Unix()
 
 	// Generate metrics
+	value = t.Unix()
 	metricsAppend(name, version, info_url, value)
 }
 

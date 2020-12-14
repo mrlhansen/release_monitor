@@ -1,5 +1,5 @@
 # Release Monitor
-Release Monitor is a small program for monitoring the release of new software versions by regularly checking configured online sources, such as GitHub repositories or folders with software packages. The information about the latest version of the software is written as a [Prometheus](https://prometheus.io/) metrics file, which for example can be ingested by the [Node Exporter](https://github.com/prometheus/node_exporter). The following backends for fetching release information is currently supported.
+Release Monitor is a small program for monitoring the release of new software versions by regularly checking the configured online sources, such as GitHub repositories or folders with software packages. The information about the latest version of the software is written as a [Prometheus](https://prometheus.io/) metrics file, which for example can be ingested by the [Node Exporter](https://github.com/prometheus/node_exporter). The following backends for fetching release information are currently implemented.
 
 * GitHub repository
 * Folder with list of packages
@@ -39,20 +39,20 @@ go get github.com/mrlhansen/release_monitor
 This section contains a short description of the different backends and how they are used in the configuration file.
 
 ### GitHub
-This backend uses the GitHub API to retrieve information about tags for given repository.
+This backend uses the GitHub API to retrieve information about tags for the given repository.
 * **owner**: Username of the repository owner.
-* **repo**: Name of the repository
+* **repo**: Name of the repository.
 * **regexp**: Optional regexp pattern for filtering the version tag. It should contain a single capture group for the version string.
 
 ### Folder
-This backend scans a list of files/packages using the specified regexp pattern and find the newest version of that package by looking at the associated date.
+This backend scans a list of files/packages using the specified regexp pattern and finds the newest version of that package by looking at the associated date.
 * **name**: Name of the software.
 * **info**: Optional URL for the software, which will be exported as part of the metrics.
 * **path**: URL for the list of files.
-* **regexp**: Regexp pattern for software package we are checking. It should contain a single capture group for the version string.
+* **regexp**: Regexp pattern for the software package we are checking. It should contain a single capture group for the version string.
 
 ### Regexp
-This backend does a simple regexp of the entire file and reports the first match as the latest release. There is a regexp both for the version string and the release date, both of which must be found in the file, otherwise no metrics will be generated.
+This backend does a simple regexp of the entire file and reports the first match as the latest release. There is a regexp for both the version string and the release date, both of which must be found in the file, otherwise no metrics will be generated.
 * **name**: Name of the software.
 * **info**: Optional URL for the software, which will be exported as part of the metrics.
 * **path**: URL for the page/file we are searching in.

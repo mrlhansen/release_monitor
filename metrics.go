@@ -12,7 +12,7 @@ func metricsClear() {
 }
 
 func metricsAppend(name string, version string, info string, value int64) {
-	str := "relmon_projects"
+	str := "release_monitor"
 	ts := time.Unix(value ,0)
 
 	str = str + `{name="` + name + `",version="` + version
