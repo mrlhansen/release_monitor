@@ -148,7 +148,7 @@ func backend_folder(name, info_url, url, pattern string) {
 			cval = t.Unix()
 		}
 
-		if cval > value {
+		if version_compare(cver, version) > 0 {
 			version = cver
 			value = cval
 		}
