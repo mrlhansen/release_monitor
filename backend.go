@@ -49,11 +49,32 @@ func backend_github(owner, repo, pattern string) {
 		return
 	}
 
-	// First tag is the latest release
-	item = data[0].(map[string]interface{})
-	version = item["name"].(string)
-	item = item["commit"].(map[string]interface{})
-	url = item["url"].(string)
+	// Compile pattern
+	re := regexp.MustCompile(pattern)
+
+	// Find latest release
+	for i := 0; i < len(data); i++ {
+		item = data[i].(map[string]interface{})
+		cver := item["name"].(string)
+		item = item["commit"].(map[string]interface{})
+
+		match := re.FindStringSubmatch(cver)
+		if len(match) > 0 {
+			cver = match[1]
+		} else {
+			continue
+		}
+
+		if version_compare(cver, version) > 0 {
+			version = cver
+			url = item["url"].(string)
+		}
+	}
+
+	// No match found
+	if len(version) == 0 {
+		return
+	}
 
 	// Retrieve commit
 	req, err = http.NewRequest("GET", url, nil)
@@ -84,13 +105,6 @@ func backend_github(owner, repo, pattern string) {
 	ts, err := time.Parse(time.RFC3339, date)
 	if err != nil {
 		log.Print(err)
-	}
-
-	// Parse version string
-	re := regexp.MustCompile(pattern)
-	match := re.FindStringSubmatch(version)
-	if len(match) > 0 {
-		version = match[1]
 	}
 
 	// Generate metrics
@@ -155,7 +169,7 @@ func backend_folder(name, info_url, url, pattern string) {
 	}
 
 	// No match found
-	if value == 0 {
+	if len(version) == 0 {
 		return
 	}
 
