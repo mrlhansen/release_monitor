@@ -8,6 +8,7 @@ import (
 
 func convert_prerelease(str string) int {
 	var x int
+	str = strings.ToLower(str)
 	switch str {
 		case "alpha":
 			x = 0
