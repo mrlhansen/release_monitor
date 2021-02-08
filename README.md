@@ -23,7 +23,7 @@ regexp:
     info: https://www.wireguard.com
     path: https://git.zx2c4.com/wireguard-linux-compat/plain/src/version.h
     regexp: (\d+\.\d+\.\d+)
-    date: \d+\.\d+.(\d+)
+    date: \d+\.\d+\.(\d+)
     format: 20060102
 ```
 
@@ -36,7 +36,7 @@ go get github.com/mrlhansen/release_monitor
 ```
 
 ## Backends
-This section contains a short description of the different backends and how they are used in the configuration file.
+This section contains a short description of the different backends and how they are used in the configuration file. All version strings are expected to follow [semantic versioning](https://semver.org), otherwise the generated metrics might be incorrect.
 
 ### GitHub
 This backend uses the GitHub API to retrieve information about tags for the given repository.
@@ -45,7 +45,7 @@ This backend uses the GitHub API to retrieve information about tags for the give
 * **regexp**: Optional regexp pattern for filtering the version tag. It should contain a single capture group for the version string.
 
 ### Folder
-This backend scans a list of files/packages using the specified regexp pattern and finds the newest version of that package by looking at the associated date.
+This backend scans a list of files/packages using the specified regexp pattern.
 * **name**: Name of the software.
 * **info**: Optional URL for the software, which will be exported as part of the metrics.
 * **path**: URL for the list of files.
