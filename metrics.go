@@ -19,7 +19,7 @@ func metricsAppend(name string, version string, info string, value int64) {
 	if len(info) > 0 {
 		str = str + `",url="` + info
 	}
-	str = str + `",date="` + ts.Format("January 02, 2006") + `"} ` + fmt.Sprintf("%d\n", value)
+	str = str + `",date="` + ts.Format("January 2, 2006") + `"} ` + fmt.Sprintf("%d\n", value)
 
 	metrics += str
 }
